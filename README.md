@@ -1,6 +1,6 @@
 # CRC Design Verification
 
-**IEEE 802.3 crc 32**
+**IEEE 802.3 crc 32 code generator**
 
 
 IEEE 802.3 crc32 Hardware Implementation could be found in: https://www.xilinx.com/support/documentation/application_notes/xapp209.pdf
@@ -19,7 +19,7 @@ New crc value = (Looktable[new index])^ (current crc value >>8) </li>
 In this case, the result crc_value is 0x78dd_4b9a. Then we use little endian to transmit the crc32 code, so that the LSB goes along with the data first: 0a 0c 0e 10 12 14 16 18 1a 1c 9a 4b dd 78
 </ul>
 
-**Check use this website**
+**Check the result use this website**
 
 
 http://www.sunshine2k.de/coding/javascript/crc/crc_js.html
