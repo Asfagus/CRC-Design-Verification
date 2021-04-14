@@ -9,10 +9,9 @@ function new(string name="cb_seq1");
 endfunction: new
 
 task body(); // sequence_item requires a task body if it is not there it will generate a warning
-	
+	c=cb_seq_item::type_id::create("cb_seq_item");	
 
-	repeat(5)begin
-		c=cb_seq_item::type_id::create("cb_seq_item");	
+	repeat(500)begin
 		start_item(c);
 		c.randomize() with {data[0]==8'h3C;};		//Randomize the "data" part of packet
 		finish_item(c);

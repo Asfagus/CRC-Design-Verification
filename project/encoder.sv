@@ -41,9 +41,10 @@ always @ (posedge m.clk or posedge m.reset) begin
 		if(m.startin && m.pushin && wcounter<5) begin
 			fifomem[wcounter] <= #1 m.datain;
 			wcounter <= #1 wcounter+1;
-			$display(" data in =%0b startin =%0b pushin =%0b fifomem=%h wcounter=%0d",m.datain,m.startin,m.pushin,fifomem,wcounter);
-		
+			//$display(" data in =%0b startin =%0b pushin =%0b fifomem=%h wcounter=%0d",m.datain,m.startin,m.pushin,fifomem,wcounter);
 		end
+		if (m.pushin)
+			$display(" data in =%0b startin =%0b pushin =%0b fifomem=%h wcounter=%0d",m.datain,m.startin,m.pushin,fifomem,wcounter);
 	end
 
 end

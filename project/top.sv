@@ -27,8 +27,8 @@ initial begin
 	run_test("cb_test");
 end
 initial begin
-clk =0;
-	repeat(100) begin
+	clk =0;
+	forever begin
 		#5 clk = ~clk;
 	end
 end

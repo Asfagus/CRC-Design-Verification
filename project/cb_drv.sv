@@ -37,7 +37,7 @@ task doWrited(cb_seq_item m);	//Sends Data Packets
 				@(posedge(xx.clk)); #1;
 				//$display(m.data.size);
 			end
-			xx.pushin=0;
+			//xx.pushin=0;
 endtask:doWrited 
 
 task doReset();
@@ -57,14 +57,14 @@ endtask: doWait
 */
 
 task run_phase(uvm_phase phase); // if this task is not there in the driver phase simuln runs forver and next sequence not recived from the driver
+	repeat(5) begin
+		doReset();
+	end
 	forever begin
 		seq_item_port.get_next_item(message_received);		
 		//Send packets to DUT
 		
 		//Reset
-		repeat(5) begin
-			doReset();
-		end
 		
 		//K.28.1
 		doWritek(message_received.data[0],1'b1);		//Startin High

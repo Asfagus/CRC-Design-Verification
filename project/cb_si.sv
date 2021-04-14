@@ -5,12 +5,12 @@ typedef enum {
 	Dwait,
 	Dwritek,// control packets
 	Dwrited // Data packets
-	} Dcmd;
+} Dcmd;
 	
 class cb_seq_item extends uvm_sequence_item;
 `uvm_object_utils(cb_seq_item)
 	Dcmd cmd;
-	rand logic[7:0]data[];
+	rand logic[7:0]data[]; //8-bit data is an dynamic array
 	//logic ctrl;
 	//logic [8:0] final_data;
 	
@@ -30,7 +30,8 @@ endclass: cb_seq_item
 automatic/dynamic arr 
 
 int a [];
-a=new[300];
+data=new[11];
 
 
 */
+
