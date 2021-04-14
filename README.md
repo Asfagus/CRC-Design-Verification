@@ -12,6 +12,7 @@ Here is an example for input data (10 byte in hex) with look up table method: 0a
 <ul>
 <li> Only until your whole data byte (in this case 10 bytes total) ends, then you xor the crc register with 0xffff_ffff to get the crc value output.Otherwise, you only update your crc register with the column "Current CRC value".</li>
 <li> Current crc value update using equation below:
+
 current crc value = (Looktable[new index])^ (current crc value >>8) </li>
 
 In this case, the result crc_value is 0x78dd_4b9a. Then we use little endian to transmit the crc32 code, so that the LSB goes along with the data first: 0a 0c 0e 10 12 14 16 18 1a 1c 9a 4b dd 78
