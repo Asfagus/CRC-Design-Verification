@@ -18,34 +18,34 @@ function void connect_phase(uvm_phase phase);
 	end
 endfunction: connect_phase
 task doWritek(reg [7:0] data,reg start);	//Sends control packets
-		 @(posedge(xx.clk));#1;
-		 	xx.reset=0;
-		 	ctrl=1'b1;		//9th bit control 
-			xx.datain={ctrl,data};	//9 bit data
-			xx.pushin=1;				
-			xx.startin=start;
+	 @(posedge(xx.clk));#1;
+	 	xx.reset=0;
+	 	ctrl=1'b1;		//9th bit control 
+		xx.datain={ctrl,data};	//9 bit data
+		xx.pushin=1;				
+		xx.startin=start;
 endtask:doWritek 
 
 task doWrited(cb_seq_item m);	//Sends Data Packets
-		 @(posedge(xx.clk)) #1;
-		 	xx.reset=0;
-		 	ctrl=1'b0;
-			xx.pushin=1;
-			xx.startin=0;
-			for (int i =4; i<m.data.size-1;i++)begin
-				xx.datain={ctrl,m.data[i]};
-				@(posedge(xx.clk)); #1;
-				//$display(m.data.size);
-			end
-			//xx.pushin=0;
+	@(posedge(xx.clk)) #1;
+		xx.reset=0;
+		ctrl=1'b0;
+		xx.pushin=1;
+		xx.startin=0;
+		for (int i =4; i<m.data.size-1;i++)begin
+			xx.datain={ctrl,m.data[i]};
+			@(posedge(xx.clk)); #1;
+			//$display(m.data.size);
+		end
+		//xx.pushin=0;
 endtask:doWrited 
 
 task doReset();
-			xx.reset=1;
-			xx.datain=0;
-			xx.pushin=0;
-			xx.startin=0;
-			@(posedge(xx.clk));#1;
+	xx.reset=1;
+	xx.datain=0;
+	xx.pushin=0;
+	xx.startin=0;
+	@(posedge(xx.clk));#1;
 endtask:doReset
 
 /*
@@ -55,31 +55,27 @@ task doWait(cb_seq_item m);
 
 endtask: doWait
 */
+task drive (cb_seq_item m);
+	//Send packets to DUT
+	//K.28.1
+	doWritek(m.data[0],1'b1);		//Startin High
+	repeat(3)begin
+		doWritek(m.data[0],1'b0);	//Startin Low send rem 3 K.28.1
+	end
+
+	doWrited(m);// Data
+
+	doWritek(m.data[m.data.size-1],1'b0);			//K.28.5, ctrl bit low
+endtask : drive
 
 task run_phase(uvm_phase phase); // if this task is not there in the driver phase simuln runs forver and next sequence not recived from the driver
+	//Reset
 	repeat(5) begin
 		doReset();
 	end
 	forever begin
 		seq_item_port.get_next_item(message_received);		
-		//Send packets to DUT
-		
-		//Reset
-		
-		//K.28.1
-		doWritek(message_received.data[0],1'b1);		//Startin High
-		repeat(3)begin
-			doWritek(message_received.data[0],1'b0);	//Startin Low send rem 3 K.28.1
-		end
-		
-		// Data
-		doWrited(message_received);
-		
-		//K.28.5
-		doWritek(8'hBC,1'b0);		//Startin High
-		
-		
-		
+		drive(message_received);	//Drives packets to the DUT		
 		seq_item_port.item_done();	// in bracket you can put response to seq1 back
 	end
 endtask: run_phase

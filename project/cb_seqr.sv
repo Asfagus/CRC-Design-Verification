@@ -5,6 +5,4 @@ function new(string name="cb_seqr",uvm_component parent =null);
 	super.new(name,parent);
 endfunction: new
 
-
-
 endclass: cb_seqr

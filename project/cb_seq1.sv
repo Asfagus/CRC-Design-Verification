@@ -13,7 +13,7 @@ task body(); // sequence_item requires a task body if it is not there it will ge
 
 	repeat(500)begin
 		start_item(c);
-		c.randomize() with {data[0]==8'h3C;};		//Randomize the "data" part of packet
+		c.randomize();		//Randomize the "data" part of packet  
 		finish_item(c);
 	end
 endtask: body
