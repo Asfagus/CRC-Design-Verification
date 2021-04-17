@@ -12,6 +12,7 @@ import uvm_pkg::*;
 //`include "cb_mon_out.sv"
 `include "cb_agent.sv"
 `include "cb_scoreboard0.sv"
+`include "cb_scoreboard8b10b.sv"
 //`include "cb_scoreboard1.sv"
 `include "cb_env.sv"
 `include "cb_test.sv"
