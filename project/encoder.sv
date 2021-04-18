@@ -1,5 +1,6 @@
 //module fifo(clk,rst,read,write,pushin,datain,pushout,dataout);
 //`include "fifo_intf.sv"
+//Sheetal modifying now
 module encoder(encoder_intf.dut m);
 /*input clk,rst,read,write,pushin;
 input logic [31:0] datain;

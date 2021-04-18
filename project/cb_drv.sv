@@ -48,13 +48,13 @@ task doReset();
 	@(posedge(xx.clk));#1;
 endtask:doReset
 
-/*
+
 task doWait(cb_seq_item m);
 		@(posedge(xx.clk));
 			xx.pushin=0;
 
 endtask: doWait
-*/
+
 task drive (cb_seq_item m);
 	//Send packets to DUT
 	//K.28.1
@@ -66,6 +66,9 @@ task drive (cb_seq_item m);
 	doWrited(m);// Data
 
 	doWritek(m.data[m.data.size-1],1'b0);			//K.28.5, ctrl bit low
+	repeat($urandom_range(10,20)) begin
+	doWait(m);
+	end
 endtask : drive
 
 task run_phase(uvm_phase phase); // if this task is not there in the driver phase simuln runs forver and next sequence not recived from the driver

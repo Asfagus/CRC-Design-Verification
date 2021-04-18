@@ -4,14 +4,15 @@ package sheethal;
 //include "fifo_intf.sv"// It is never kept inside package because they need to be accesed by ever1
 import uvm_pkg::*;
 `include "cb_si.sv"
-//`include "mimsg.sv"
+`include "mimsg.sv"
 `include "cb_seq1.sv"
 `include "cb_seqr.sv"
 `include "cb_drv.sv"
-//`include "cb_mon_in.sv"
+`include "cb_mon_in.sv"
 //`include "cb_mon_out.sv"
 `include "cb_agent.sv"
-//`include "cb_scoreboard0.sv"
+`include "cb_scoreboard0.sv"
+`include "cb_scoreboard8b10b.sv"
 //`include "cb_scoreboard1.sv"
 `include "cb_env.sv"
 `include "cb_test.sv"
