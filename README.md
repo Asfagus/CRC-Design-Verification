@@ -11,7 +11,7 @@ IEEE 802.3 crc32 Normal polynomial (hex)used:0x04C11DB7
 ![alt text](https://github.com/Asfagus/CRC-Design-Verification/blob/main/crc32.png)
 
 <ul>
-<li> Only until your whole data byte (in this case 10 bytes total) ends, then you xor the New crc register with 0xffff_ffff to get the crc value output.Otherwise, you only update your crc register with the column "Current CRC value". I xor the New crc register with 0xffff_ffff so I can check my manual calculation using the website below to see what if I send 1 byte only, 2 byte only, 3 byte only...... or 10 byte data.</li>
+<li> Only until your whole data byte (in this case 10 bytes total) ends, then you xor the New crc register with 0xffff_ffff to get the crc value output. Otherwise, you only update your crc register with the column "Current CRC value". I xor the New crc register with 0xffff_ffff at the end of each line so I can check my manual calculation using the website below to see what if I send 1 byte only, 2 byte only, 3 byte only...... or 10 byte data.</li>
 <li> Current crc value update using equation below:
 
 New crc value = (Looktable[new index])^ (current crc value >>8) </li>
