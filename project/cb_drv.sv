@@ -34,8 +34,9 @@ task doWrited(cb_seq_item m);	//Sends Data Packets
 		xx.startin=0;
 		for (int i =4; i<m.data.size-1;i++)begin
 			xx.datain={ctrl,m.data[i]};
-			@(posedge(xx.clk)); #1;
-			//$display(m.data.size);
+			if(i<m.data.size-2)	//added to avoid last data double clocking
+				@(posedge(xx.clk)); #1;
+			//$display("Data");
 		end
 		//xx.pushin=0;
 endtask:doWrited 
@@ -50,13 +51,15 @@ endtask:doReset
 
 
 task doWait(cb_seq_item m);
-		@(posedge(xx.clk));
+		@(posedge(xx.clk)) #1;
 			xx.pushin=0;
 
 endtask: doWait
 
 task drive (cb_seq_item m);
 	//Send packets to DUT
+	$display("Driving Packet of VAlues :%p",m.data);
+	$display("Driving Packet of size :%d",m.data.size());
 	//K.28.1
 	doWritek(m.data[0],1'b1);		//Startin High
 	repeat(3)begin
@@ -65,8 +68,8 @@ task drive (cb_seq_item m);
 
 	doWrited(m);// Data
 
-	doWritek(m.data[m.data.size-1],1'b0);			//K.28.5, ctrl bit low
-	repeat($urandom_range(10,20)) begin
+	doWritek(8'hBC,1'b0);			//K.28.5, start bit low
+	repeat($urandom_range(10,20)) begin	//wait for 10-20 clock cycles
 	doWait(m);
 	end
 endtask : drive

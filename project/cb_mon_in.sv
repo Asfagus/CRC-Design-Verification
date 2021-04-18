@@ -27,7 +27,7 @@ task run_phase(uvm_phase phase);
 			m.startin=dut_intf.startin;
 			m.pushin=dut_intf.pushin;
 			m.datain=dut_intf.datain;
-				pdat.write(m);
+			pdat.write(m);
 		end
 	end
 	

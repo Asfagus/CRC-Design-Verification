@@ -6,6 +6,7 @@
 class cb_scoreboard8b10b extends uvm_scoreboard;
 `uvm_component_utils(cb_scoreboard8b10b)
 uvm_tlm_analysis_fifo #(mimsg) message_in_8b10b;
+uvm_analysis_port #(logic[9:0]) message_out;	//output dout to scbd for compare
 //uvm_tlm_analysis_fifo #(logic) message_out;
 //uvm_blocking_put_imp #(logic,cb_scoreboard0) message_out;
 
@@ -28,16 +29,16 @@ endfunction: new
 
 function void build_phase(uvm_phase phase);
 	message_in_8b10b=new("message_in",this);
-	//message_out=new("message_out",this);
+	message_out=new("message_out",this);
 endfunction:build_phase
 
 function int update_rd(input logic[5:0] atemp);
 	int c1,c0,rd_new, diff;
-    $display("I am inside the function atemp=%0b",atemp);
+    //$display("I am inside the function atemp=%0b",atemp);
     c1=$countones(atemp);
     c0=$countbits(atemp,'0);
-	$display("no of 1=%0d",c1);
-	$display("no of 0=%0d",c0);
+	//$display("no of 1=%0d",c1);
+	//$display("no of 0=%0d",c0);
     diff =c1-c0;
     if (diff + rd > 2 || diff +rd <-2) begin
       rd_new = rd+(-diff);
@@ -49,11 +50,11 @@ endfunction: update_rd
 
 function int update_rd_b(input logic[3:0] btemp);
 	int c1,c0,rd_new, diff;
-    $display("I am inside the function btemp=%0b",btemp);
+    //$display("I am inside the function btemp=%0b",btemp);
     c1=$countones(btemp);
     c0=$countbits(btemp,'0);
-	$display("no of 1=%0d",c1);
-	$display("no of 0=%0d",c0);
+	//$display("no of 1=%0d",c1);
+	//$display("no of 0=%0d",c0);
 	//$display("before rd_b=%0d",rd_b);
     diff =c1-c0;
     if (diff + rd_b > 2 || diff +rd_b <-2) begin
@@ -67,11 +68,11 @@ endfunction: update_rd_b
 
 function int update_rd_k(input logic[9:0] dout);
 	int c1,c0,rd_new, diff;
-    $display("I am inside the function kdatain=%0b",kdatain);
+    //$display("I am inside the function kdatain=%0b",kdatain);
     c1=$countones(dout);
     c0=$countbits(dout,'0);
-	$display("no of 1=%0d",c1);
-	$display("no of 0=%0d",c0);
+	//$display("no of 1=%0d",c1);
+	//$display("no of 0=%0d",c0);
     diff =c1-c0;
     if (diff + rd_k > 2 || diff +rd_k <-2) begin
       rd_new = rd_k+(-diff);
@@ -86,7 +87,7 @@ task disparity(mimsg m);
 a=m.datain;   
 b=m.datain>>5;
 k=m.datain>>8;
-$display("datain=%b a=%0b b=%b k=%b",m.datain,a,b,k);
+//$display("datain=%b a=%0b b=%b k=%b",m.datain,a,b,k);
 	if(k==1) begin
 		kdatain=m.datain;
 		if(rd_k==-1) begin
@@ -129,7 +130,7 @@ $display("datain=%b a=%0b b=%b k=%b",m.datain,a,b,k);
 				dout=10'b0001011110;
 			end
 			endcase
-		$display("1.Expected output=%0b",dout);
+		//$display("1.Expected output=%0b",dout);
 		end
 		if(rd_k==1) begin
 			case(kdatain)
@@ -170,14 +171,14 @@ $display("datain=%b a=%0b b=%b k=%b",m.datain,a,b,k);
 				dout=10'b1110100001;
 			end
 			endcase
-			$display("2.Expected output=%0b",dout);
+			//$display("2.Expected output=%0b",dout);
 		end
 		rd_k=update_rd_k(kdatain);
-		$display("Final RD_k for out=%0d",rd_k);
+		//$display("Final RD_k for out=%0d",rd_k);
 	end
  if(k==0) begin
 	if(rd==-1) begin
-      $display("I am inside if loop of 5bits rd=%0d",rd);
+      //$display("I am inside if loop of 5bits rd=%0d",rd);
 		case(a)
 		0: begin
 			atemp = 6'b111001;			
@@ -310,10 +311,10 @@ $display("datain=%b a=%0b b=%b k=%b",m.datain,a,b,k);
 	end
 	endcase
 	dout={btemp,atemp};
-	$display("3.Expected output=%0b",dout);
+	//$display("3.Expected output=%0b",dout);
 	end
 	if(rd==1) begin
-      $display("I am inside if loop of 5bits rd=%0d",rd);
+      //$display("I am inside if loop of 5bits rd=%0d",rd);
 		case(a)
 		0: begin
 			atemp = 6'b000110;			
@@ -446,20 +447,24 @@ $display("datain=%b a=%0b b=%b k=%b",m.datain,a,b,k);
 	end
 	endcase
 	dout={btemp,atemp};
-	$display("4.Expected output=%0b",dout);
+	//$display("4.Expected output=%0b",dout);
 	end
 		rd=update_rd(atemp);	
-		$display("Final RD for atemp=%0d",rd);
+		//$display("Final RD for atemp=%0d",rd);
 		rd_b=update_rd_b(btemp);
-		$display("Final RD for btemp=%0d",rd_b);
+		//$display("Final RD for btemp=%0d",rd_b);
+		
+	
  end	
 endtask
 task run_phase(uvm_phase phase);
 	forever begin
 		message_in_8b10b.get(m);
 		if((m.pushin)) begin
-			//$display("Data from Scoreboard8b10b UVM =%h",m.datain);
-			disparity(m);		
+			$display("Data from Scoreboard8b10b UVM =%h",m.datain);
+			disparity(m);	
+			//Write dout to scbd_disparity
+			message_out.write(dout);	
 		end
 	end
 endtask:run_phase

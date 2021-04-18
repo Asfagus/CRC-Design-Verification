@@ -3,6 +3,8 @@ class cb_agent extends uvm_agent;
 cb_seqr sqr;
 cb_drv drv;
 cb_mon_in monin;
+cb_mon_out monout;
+
 
 function new (string name="cb_agent",uvm_component parent =null);
 super.new(name,parent);// The super keyword is used from within a derived class to access to members of the parent class.
@@ -12,6 +14,7 @@ function void build_phase(uvm_phase phase);
 	sqr=cb_seqr::type_id::create("cb_seqr",this);
 	drv=cb_drv::type_id::create("drv",this);
 	monin=cb_mon_in::type_id::create("monin",this);
+	monout=cb_mon_out::type_id::create("monout",this);
 	
 endfunction: build_phase
 
