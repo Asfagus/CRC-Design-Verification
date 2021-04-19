@@ -24,8 +24,10 @@ class cb_mon_out extends uvm_monitor;
 			if(!dut_intf.reset)begin
 				m=new;
 				m.startout=dut_intf.startout;
+				//$display("I am inside output monitor");
 				m.pushout=dut_intf.pushout;
 				m.dataout=dut_intf.dataout;
+				//$display("m.pushout=%h",m.pushout);
 				pdat1.write(m);
 			end
 		end

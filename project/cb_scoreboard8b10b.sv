@@ -18,8 +18,8 @@ logic [3:0] btemp;
 logic[9:0] dout,dout1;
 logic[7:0] kdatain;
 int rd=-1;
-int rd_b=-1;
-int rd_k=-1;
+//int rd_b=-1;
+//int rd_k=-1;
 logic k;
 //int count;
 //logic sh_full;
@@ -57,11 +57,11 @@ function int update_rd_b(input logic[3:0] btemp);
 	//$display("no of 0=%0d",c0);
 	//$display("before rd_b=%0d",rd_b);
     diff =c1-c0;
-    if (diff + rd_b > 2 || diff +rd_b <-2) begin
-      rd_new = rd_b+(-diff);
+    if (diff + rd > 2 || diff +rd <-2) begin
+      rd_new = rd+(-diff);
     end
     else 
-      rd_new=rd_b+diff;
+      rd_new=rd+diff;
    //$display("rd_new=%0d",rd_new);
 	return rd_new;		
 endfunction: update_rd_b
@@ -74,11 +74,11 @@ function int update_rd_k(input logic[9:0] dout);
 	//$display("no of 1=%0d",c1);
 	//$display("no of 0=%0d",c0);
     diff =c1-c0;
-    if (diff + rd_k > 2 || diff +rd_k <-2) begin
-      rd_new = rd_k+(-diff);
+    if (diff + rd > 2 || diff +rd <-2) begin
+      rd_new = rd+(-diff);
     end
     else 
-      rd_new=rd_k+diff;
+      rd_new=rd+diff;
 	return rd_new;		
 endfunction: update_rd_k
 
@@ -90,7 +90,7 @@ k=m.datain>>8;
 //$display("datain=%b a=%0b b=%b k=%b",m.datain,a,b,k);
 	if(k==1) begin
 		kdatain=m.datain;
-		if(rd_k==-1) begin
+		if(rd==-1) begin
 			case(kdatain)
 			8'h1c: begin
 				dout=10'b0010111100;
@@ -132,7 +132,7 @@ k=m.datain>>8;
 			endcase
 		//$display("1.Expected output=%0b",dout);
 		end
-		if(rd_k==1) begin
+		if(rd==1) begin
 			case(kdatain)
 			8'h1c: begin
 				dout=10'b1101000011;
@@ -173,7 +173,7 @@ k=m.datain>>8;
 			endcase
 			//$display("2.Expected output=%0b",dout);
 		end
-		rd_k=update_rd_k(kdatain);
+		rd=update_rd_k(kdatain);
 		//$display("Final RD_k for out=%0d",rd_k);
 	end
  if(k==0) begin
@@ -278,7 +278,7 @@ k=m.datain>>8;
 		end
 	endcase
 	end
-	if(rd_b==-1) begin
+	if(rd==-1) begin
 	case(b)
 	0: begin
 		btemp = 4'b1101;
@@ -414,7 +414,7 @@ k=m.datain>>8;
 		end
 	endcase
 	end
-	if(rd_b==1) begin
+	if(rd==1) begin
 	case(b)
 	0: begin
 		btemp = 4'b0010;
@@ -451,7 +451,7 @@ k=m.datain>>8;
 	end
 		rd=update_rd(atemp);	
 		//$display("Final RD for atemp=%0d",rd);
-		rd_b=update_rd_b(btemp);
+		rd=update_rd_b(btemp);
 		//$display("Final RD for btemp=%0d",rd_b);
 		
 	

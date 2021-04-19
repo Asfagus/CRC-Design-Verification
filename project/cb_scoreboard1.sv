@@ -17,14 +17,15 @@ class cb_scoreboard1 extends uvm_scoreboard;
 	endfunction:build_phase
 
 	task run_phase(uvm_phase phase);
-		//m=new();	//Not required
+	forever begin
+		m=new();	//Not required
 		message_in.get(m);
+		//$display("pushout from Scoreboard1 UVM =%h",m.pushout);	
 		if((m.pushout)) begin
 			//$display("Data from Scoreboard1 UVM =%h",m.dataout);	
 			message_out.write(m);	
 		end
-		//else
-		//$display("I dint get anyting");	
+	end
 	endtask:run_phase
 
 endclass: cb_scoreboard1
