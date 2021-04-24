@@ -5,10 +5,10 @@
 //`uvm_blocking_put_imp_decl(_1)
 class cb_scoreboard0 extends uvm_scoreboard;
 `uvm_component_utils(cb_scoreboard0)
+
 uvm_tlm_analysis_fifo #(mimsg) message_in;
 uvm_analysis_port #(mimsg) message_out;
-//uvm_tlm_analysis_fifo #(logic) message_out;
-//uvm_blocking_put_imp #(logic,cb_scoreboard0) message_out;
+
 
 mimsg m;
 //int count;

@@ -461,7 +461,7 @@ task run_phase(uvm_phase phase);
 	forever begin
 		message_in_8b10b.get(m);
 		if((m.pushin)) begin
-			$display("Data from Scoreboard8b10b UVM =%h",m.datain);
+			;//$display("Data from Scoreboard8b10b UVM =%h",m.datain);
 			disparity(m);	
 			//Write dout to scbd_disparity
 			message_out.write(dout);	

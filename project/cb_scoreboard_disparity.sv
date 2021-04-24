@@ -1,6 +1,4 @@
-// Takes data from scbd1 for actual
-// Takes data from scbd8b/10b for expected
-//compares both for equality
+
 
 
 class cb_scoreboard_disparity extends uvm_scoreboard;
@@ -25,7 +23,7 @@ class cb_scoreboard_disparity extends uvm_scoreboard;
 	endtask
 
 	task run_phase(uvm_phase phase);
-	fork
+	;/*fork
 		forever begin
 			message_in_scbd8b10b.get(dout_ed);
 			$display("ED dout:%h",dout_ed);
@@ -39,7 +37,7 @@ class cb_scoreboard_disparity extends uvm_scoreboard;
 				$display("AD dout:%h",m_act.dataout);
 				dout_act=m_act.dataout;
 				if(dout_ed!==dout_act) begin
-				`uvm_fatal("Data Mismatch",$sformatf("Failed ed:%h,act:%h",dout_ed,dout_act))
+				`uvm_error("Data Mismatch",$sformatf("Failed ed:%h,act:%h",dout_ed,dout_act))
 				end			
 			end
 		end
@@ -47,8 +45,8 @@ class cb_scoreboard_disparity extends uvm_scoreboard;
 			if(dout_ed!==dout_act) begin
 				`uvm_fatal("Data Mismatch","Expected out not matching output from the DUT")
 			end
-		end*/
-	join
+		end
+	join*/
 	endtask:run_phase
 
 endclass: cb_scoreboard_disparity

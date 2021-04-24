@@ -69,6 +69,7 @@ task drive (cb_seq_item m);
 	doWrited(m);// Data
 
 	doWritek(8'hBC,1'b0);			//K.28.5, start bit low
+	
 	repeat($urandom_range(10,20)) begin	//wait for 10-20 clock cycles
 	doWait(m);
 	end

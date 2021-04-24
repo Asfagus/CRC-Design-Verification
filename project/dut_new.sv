@@ -1,8 +1,6 @@
 `timescale 1ns/10ps
 
-//`include "crc32.sv"
-//Need to reverse the bits for 10bit in dataout
-//Eg 0f9==27C
+`include "crc32.sv"
 
 module dut(input clk, input reset, input pushin,input [8:0] datain,
 					input startin, output reg pushout, output reg [9:0] dataout, output reg startout);
