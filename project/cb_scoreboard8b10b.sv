@@ -11,6 +11,7 @@ uvm_analysis_port #(logic[9:0]) message_out;	//output dout to scbd for compare
 //uvm_blocking_put_imp #(logic,cb_scoreboard0) message_out;
 
 mimsg m;
+//logic[9:0] mo;
 logic [4:0] a;
 logic [5:0] atemp;
 logic [2:0] b;
@@ -278,41 +279,7 @@ k=m.datain>>8;
 		end
 	endcase
 	end
-	if(rd==-1) begin
-	case(b)
-	0: begin
-		btemp = 4'b1101;
-	end
-	1: begin
-		btemp = 4'b1001;
-	end
-	2: begin
-		btemp = 4'b1010;
-	end
-	3: begin
-		btemp = 4'b0011;
-	end
-	4: begin
-		btemp = 4'b1011;
-	end
-	5: begin
-		btemp = 4'b0101;
-	end
-	6: begin
-		btemp = 4'b0110;
-	end
-	7: begin
-		if(atemp==6'b110001 || atemp==6'b110010 ||atemp==6'b110100) begin
-		btemp = 4'b1110;
-		end
-		else begin
-		btemp = 4'b0111;
-		end
-	end
-	endcase
-	dout={btemp,atemp};
-	//$display("3.Expected output=%0b",dout);
-	end
+	
 	if(rd==1) begin
       //$display("I am inside if loop of 5bits rd=%0d",rd);
 		case(a)
@@ -414,6 +381,9 @@ k=m.datain>>8;
 		end
 	endcase
 	end
+	rd=update_rd(atemp);	
+	//$display("Final RD for atemp=%0d",rd);
+	
 	if(rd==1) begin
 	case(b)
 	0: begin
@@ -446,25 +416,57 @@ k=m.datain>>8;
 		end
 	end
 	endcase
-	dout={btemp,atemp};
-	//$display("4.Expected output=%0b",dout);
 	end
-		rd=update_rd(atemp);	
-		//$display("Final RD for atemp=%0d",rd);
+	if(rd==-1) begin
+	case(b)
+	0: begin
+		btemp = 4'b1101;
+	end
+	1: begin
+		btemp = 4'b1001;
+	end
+	2: begin
+		btemp = 4'b1010;
+	end
+	3: begin
+		btemp = 4'b0011;
+	end
+	4: begin
+		btemp = 4'b1011;
+	end
+	5: begin
+		btemp = 4'b0101;
+	end
+	6: begin
+		btemp = 4'b0110;
+	end
+	7: begin
+		if(atemp==6'b110001 || atemp==6'b110010 ||atemp==6'b110100) begin
+		btemp = 4'b1110;
+		end
+		else begin
+		btemp = 4'b0111;
+		end
+	end
+	endcase
+	end
 		rd=update_rd_b(btemp);
-		//$display("Final RD for btemp=%0d",rd_b);
-		
-	
- end	
+		//$display("Final RD for btemp=%0d",rd);
+		dout={btemp,atemp};		
+end	
 endtask
 task run_phase(uvm_phase phase);
 	forever begin
 		message_in_8b10b.get(m);
 		if((m.pushin)) begin
-			;//$display("Data from Scoreboard8b10b UVM =%h",m.datain);
+			//$display("Data from Scoreboard8b10b UVM =%h",m.datain);
 			disparity(m);	
 			//Write dout to scbd_disparity
-			message_out.write(dout);	
+			//if(dout!=10'b0101111100 && dout!=10'b1010000011) begin
+				//$display("dout=%h",dout);
+			
+				message_out.write(dout);	
+			//end	
 		end
 	end
 endtask:run_phase
