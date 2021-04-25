@@ -7,6 +7,8 @@ cb_scoreboard1 scbd1;
 cb_scoreboard_disparity scbd_disparity;
 cb_agent agnt1;
 cb_scoreboard_datachk scbd_dc;
+cb_scoreboard_checkercrc scbdcrcchecker;
+cb_scoreboard_crc scbdcrc;
 function new (string name="cb_env",uvm_component parent =null);
 super.new(name,parent);// The super keyword is used from within a derived class to access to members of the parent class.
 endfunction :new
@@ -19,6 +21,8 @@ function void build_phase(uvm_phase phase);
 	monout=cb_mon_out::type_id::create("monout",this);
 	scbd_disparity=cb_scoreboard_disparity::type_id::create("scbd_disparity",this);
 	scbd_dc=cb_scoreboard_datachk::type_id::create("scbd_dc",this);
+	scbdcrc=cb_scoreboard_crc::type_id::create("scbdcrc",this);
+	scbdcrcchecker=cb_scoreboard_checkercrc::type_id::create("scbdcrcchecker",this);
 	
 endfunction: build_phase
 
@@ -26,10 +30,13 @@ function void connect_phase(uvm_phase phase);
 	agnt1.monin.pdat.connect(scbd0.message_in.analysis_export);	//connects driver to monitor to scbd0
 	agnt1.monout.pdat1.connect(scbd1.message_in.analysis_export); //connects DUt to monitor to scbd1
 	scbd0.message_out.connect(scbd8b10b.message_in_8b10b.analysis_export);	//connects scbd0 to scbd8b/10b
+	scbd0.message_out1.connect(scbdcrc.message_in_scbdcrc.analysis_export);// connects scbd0 to scbdcrc
 	scbd8b10b.message_out.connect(scbd_disparity.message_in_scbd8b10b.analysis_export);// connects scbd8b10b to scbd_disparity
 	scbd1.message_out.connect(scbd_disparity.message_in_scbd1.analysis_export);// connects scbd1 to scbd_disparity
 	scbd8b10b.message_out.connect(scbd_dc.message_in_scbd8b10b.analysis_export);// connects scbd8b10b to scbd_dc
 	scbd1.message_out.connect(scbd_dc.message_in_scbd1.analysis_export);// connects scbd1 to scbd_dc
+	scbd1.message_out1.connect(scbdcrcchecker.message_in_scbd1a.analysis_export);// connects scbd1 to scbd_crcchecker
+	scbdcrc.message_out_scbdcrc.connect(scbdcrcchecker.message_in_scbdcrca.analysis_export);
 	
 endfunction:connect_phase
 
