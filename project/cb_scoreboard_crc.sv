@@ -754,6 +754,7 @@ crcdatain=m.datain;
 		//$display("crc4=%h",dout_crc4);
 		dout_crc5 = k_crc_disparity(8'b10111100);
 		//$display("K28.5=%h",dout_crc5);
+		crc32_out_buff=32'hffffffff;
 	end	
 endtask
 
