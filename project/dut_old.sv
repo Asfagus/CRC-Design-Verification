@@ -793,4 +793,4 @@ module dut(input clk, input reset, input pushin,input [8:0] datain,
 
 
 
-endmodule : dut
+endmodule : dut_old
