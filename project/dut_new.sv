@@ -369,10 +369,18 @@ module dut(input clk, input reset, input pushin,input [8:0] datain,
 								d4 = 4'b1010;
 							end
 							3:begin
-								if(RD==0)begin
-									d4 = 4'b0011;
+								if($countones(d6)==3'b011)begin
+									if(RD==0)begin
+										d4 = 4'b0011;
+									end else begin
+										d4 = 4'b1100;
+									end
 								end else begin
-									d4 = 4'b1100;
+									if(RD==0)begin
+										d4 = 4'b1100;
+									end else begin
+										d4 = 4'b0011;
+									end
 								end
 							end
 							4:begin
@@ -797,10 +805,18 @@ module dut(input clk, input reset, input pushin,input [8:0] datain,
 								d4 = 4'b1010;
 							end
 							3:begin
-								if(RD==0)begin
-									d4 = 4'b0011;
+								if($countones(d6)==3'b011)begin
+									if(RD==0)begin
+										d4 = 4'b0011;
+									end else begin
+										d4 = 4'b1100;
+									end
 								end else begin
-									d4 = 4'b1100;
+									if(RD==0)begin
+										d4 = 4'b1100;
+									end else begin
+										d4 = 4'b0011;
+									end
 								end
 							end
 							4:begin
