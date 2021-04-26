@@ -36,7 +36,7 @@ module dut(input clk, input reset, input pushin,input [8:0] datain,
 	//assign zeros = $countbits(dataout_d,'0);
 	assign crc32_in = datain[7:0];
 	//assign crc32_out1 = crc32_out;
-	//assign rst_n = reset;
+	assign rst_n = reset;
 	
 
 	always@(posedge clk)begin
@@ -54,7 +54,6 @@ module dut(input clk, input reset, input pushin,input [8:0] datain,
 			buffer<=0;
 			flag<=0;
 			data_buffer<=0;
-			rst_n=1;
 		end else begin
 			RD<= RD_d;
 			count<=count_d;
@@ -67,7 +66,6 @@ module dut(input clk, input reset, input pushin,input [8:0] datain,
 			buffer<=buffer_d;
 			flag<=flag_d;
 			data_buffer<=data_buffer_d;
-			rst_n=0;
 		end
 	end
 
@@ -85,7 +83,6 @@ module dut(input clk, input reset, input pushin,input [8:0] datain,
 		data_buffer_d = data_buffer;
 			case(cs)
 				IDLE:begin
-					rst_n=1;
 					count_d = 0;
 					pushout_d = 0;
 					startout_d = 0;
@@ -372,18 +369,10 @@ module dut(input clk, input reset, input pushin,input [8:0] datain,
 								d4 = 4'b1010;
 							end
 							3:begin
-								if($countones(d6)==3'b011)begin
-									if(RD==0)begin
-										d4 = 4'b0011;
-									end else begin
-										d4 = 4'b1100;
-									end
+								if(RD==0)begin
+									d4 = 4'b0011;
 								end else begin
-									if(RD==0)begin
-										d4 = 4'b1100;
-									end else begin
-										d4 = 4'b0011;
-									end
+									d4 = 4'b1100;
 								end
 							end
 							4:begin
@@ -808,18 +797,10 @@ module dut(input clk, input reset, input pushin,input [8:0] datain,
 								d4 = 4'b1010;
 							end
 							3:begin
-								if($countones(d6)==3'b011)begin
-									if(RD==0)begin
-										d4 = 4'b0011;
-									end else begin
-										d4 = 4'b1100;
-									end
+								if(RD==0)begin
+									d4 = 4'b0011;
 								end else begin
-									if(RD==0)begin
-										d4 = 4'b1100;
-									end else begin
-										d4 = 4'b0011;
-									end
+									d4 = 4'b1100;
 								end
 							end
 							4:begin

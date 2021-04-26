@@ -285,12 +285,14 @@ module crc32
 
 
 	// Construct the code part " crc = (crc >> 8) ^ table[(crc & 0xff) ^ octet]; " 
-    always @(posedge clk or negedge rst_n) begin
-        if (!rst_n) begin
+    always @(posedge clk or posedge rst_n) begin
+        if (rst_n)begin
 		    crc32_out_buff  <= 32'hFFFFFFFF; 
+		    //crc32_out = crc32_out; 
         end		
         else if (crc32_valid_in) begin 
       		crc32_out_buff  <= (crc32_out_buff >> 8) ^ crc32_table;
+      		//crc32_out = ~crc32_out_buff; 
 		end
     end
 	 
