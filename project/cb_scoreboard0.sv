@@ -9,6 +9,7 @@ class cb_scoreboard0 extends uvm_scoreboard;
 uvm_tlm_analysis_fifo #(mimsg) message_in;
 uvm_analysis_port #(mimsg) message_out;
 uvm_analysis_port #(mimsg) message_out1;//port to scbdcrc
+uvm_analysis_port #(mimsg) message_out2;
 
 
 mimsg m;
@@ -22,6 +23,7 @@ function void build_phase(uvm_phase phase);
 	message_in=new("message_in",this);
 	message_out=new("message_out",this);
 	message_out1=new("message_out1",this);
+	message_out2=new("message_out2",this);
 
 endfunction:build_phase
 
@@ -32,7 +34,8 @@ task run_phase(uvm_phase phase);
 		if((m.pushin)) begin
 			//$display("Data from Scoreboard0 UVM =%h",m.datain);	
 			message_out.write(m);
-			message_out1.write(m);		
+			message_out1.write(m);
+			message_out2.write(m);		
 		end
 		//else
 		//$display("I dint get anyting");

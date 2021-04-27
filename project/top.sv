@@ -19,6 +19,7 @@ import uvm_pkg::*;
 `include "cb_scoreboard_datachk.sv"
 `include "cb_scoreboard_checkercrc.sv"
 `include "cb_scoreboard_crc.sv"
+`include "cb_scoreboard_framein.sv"
 `include "cb_env.sv"
 `include "cb_test.sv"
 endpackage: sheethal
