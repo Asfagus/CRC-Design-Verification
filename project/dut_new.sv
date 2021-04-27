@@ -409,13 +409,15 @@ module dut(input clk, input reset, input pushin,input [8:0] datain,
 							end
 							7:begin
 								if($countones(d6)==3'b011)begin
-									if(datain[4:0]==5'b10001 | datain[4:0]==5'b10010 | datain[4:0]==5'b10100)begin
+									//if(datain[4:0]==5'b10001 | datain[4:0]==5'b10010 | datain[4:0]==5'b10100)begin
+									if(d6==6'b110001 | d6==6'b110010 | d6==6'b110100)begin //done by sheethal
 										if(RD==0)begin
 											d4 = 4'b1110;
 										end else begin
 											d4 = 4'b1000;
 										end
-									end else if(datain[4:0]==5'b01011 | datain[4:0]==5'b01101 | datain[4:0]==5'b01110) begin
+									//end else if(datain[4:0]==5'b01011 | datain[4:0]==5'b01101 | datain[4:0]==5'b01110) begin
+									end else if(d6==6'b001011 | d6==6'b001101 | d6==6'b001110) begin //done by sheethal
 										if(RD==0)begin
 											d4 = 4'b0111;
 										end else begin
@@ -429,13 +431,15 @@ module dut(input clk, input reset, input pushin,input [8:0] datain,
 										end		
 									end
 								end else begin
-									if(datain[4:0]==5'b10001 | datain[4:0]==5'b10010 | datain[4:0]==5'b10100)begin
+									//if(datain[4:0]==5'b10001 | datain[4:0]==5'b10010 | datain[4:0]==5'b10100)begin
+									if(d6==6'b110001 | d6==6'b110010 | d6==6'b110100)begin //done by sheethal
 										if(RD==1)begin
 											d4 = 4'b1110;
 										end else begin
 											d4 = 4'b1000;
 										end
-									end else if(datain[4:0]==5'b01011 | datain[4:0]==5'b01101 | datain[4:0]==5'b01110) begin
+									//end else if(datain[4:0]==5'b01011 | datain[4:0]==5'b01101 | datain[4:0]==5'b01110) begin
+									end else if(d6==6'b001011 | d6==6'b001101 | d6==6'b001110) begin //done by sheethal
 										if(RD==1)begin
 											d4 = 4'b0111;
 										end else begin
@@ -588,15 +592,19 @@ module dut(input clk, input reset, input pushin,input [8:0] datain,
 					case(count_crc)
 						0:begin
 							buffer_d = crc32_out[7:0];
+							//$display("from DUT CRC1=%0h",buffer_d);
 						end
 						1:begin
 							buffer_d = crc32_out[15:8];
+							//$display("from DUT CRC2=%0h",buffer_d);
 						end
 						2:begin
 							buffer_d = crc32_out[23:16];
+							//$display("from DUT CRC3=%0h",buffer_d);
 						end
 						3:begin
 							buffer_d = crc32_out[31:24];
+							//$display("from DUT CRC4=%0h",buffer_d);
 						end
 					endcase
 					case(buffer_d[4:0])
@@ -845,13 +853,15 @@ module dut(input clk, input reset, input pushin,input [8:0] datain,
 							end
 							7:begin
 								if($countones(d6)==3'b011)begin
-									if(datain[4:0]==5'b10001 | datain[4:0]==5'b10010 | datain[4:0]==5'b10100)begin
+									//if(datain[4:0]==5'b10001 | datain[4:0]==5'b10010 | datain[4:0]==5'b10100)begin
+									if(d6==6'b110001 | d6==6'b110010 | d6==6'b110100)begin //done by sheethal
 										if(RD==0)begin
 											d4 = 4'b1110;
 										end else begin
 											d4 = 4'b1000;
 										end
-									end else if(datain[4:0]==5'b01011 | datain[4:0]==5'b01101 | datain[4:0]==5'b01110) begin
+									//end else if(datain[4:0]==5'b01011 | datain[4:0]==5'b01101 | datain[4:0]==5'b01110) begin
+									end else if(d6==6'b001011 | d6==6'b001101 | d6==6'b001110) begin //done by sheethal
 										if(RD==0)begin
 											d4 = 4'b0111;
 										end else begin
@@ -865,13 +875,15 @@ module dut(input clk, input reset, input pushin,input [8:0] datain,
 										end		
 									end
 								end else begin
-									if(datain[4:0]==5'b10001 | datain[4:0]==5'b10010 | datain[4:0]==5'b10100)begin
+									//if(datain[4:0]==5'b10001 | datain[4:0]==5'b10010 | datain[4:0]==5'b10100)begin
+									if(d6==6'b110001 | d6==6'b110010 | d6==6'b110100)begin //done by sheethal
 										if(RD==1)begin
 											d4 = 4'b1110;
 										end else begin
 											d4 = 4'b1000;
 										end
-									end else if(datain[4:0]==5'b01011 | datain[4:0]==5'b01101 | datain[4:0]==5'b01110) begin
+									//end else if(datain[4:0]==5'b01011 | datain[4:0]==5'b01101 | datain[4:0]==5'b01110) begin
+									end else if(d6==6'b001011 | d6==6'b001101 | d6==6'b001110) begin //done by sheethal
 										if(RD==1)begin
 											d4 = 4'b0111;
 										end else begin

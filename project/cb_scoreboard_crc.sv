@@ -89,7 +89,7 @@ function int update_crc(input logic[7:0] crcdatain);
 	
     // Declare a 32x256 LUT for the CRC remainder table	
 	// Construct the "table[(crc & 0xff) ^ octet]" operation
-	if(crcdatain) begin
+	//if(crcdatain) begin
 	 //crc32_out_buff=32'hffffffff;
 	 crc32_lut_in = crc32_out_buff[7:0] ^ crcdatain;
 	 //$display("LUT from scoreboard CRC %h",crc32_lut_in);
@@ -357,7 +357,7 @@ function int update_crc(input logic[7:0] crcdatain);
 	    crc32_out_buff  = (crc32_out_buff >> 8) ^ crc32_table;
 	    crc32_out = crc32_out_buff ^ 32'hffffffff;
 	 	//$display("OUT from scoreboard CRC %h",crc32_out);
-	   end
+	   //end
 	
 	return crc32_out;
 endfunction: update_crc
@@ -944,7 +944,7 @@ b=crc>>5;
 			atemp = 6'b111010;			
 		end
 		16: begin
-			atemp = 6'b110100;			
+			atemp = 6'b110110;			
 		end
 		17: begin
 			atemp = 6'b110001;			
