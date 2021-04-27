@@ -509,7 +509,7 @@ crcdatain=m.datain;
 			atemp = 6'b111010;			
 		end
 		16: begin
-			atemp = 6'b110100;			
+			atemp = 6'b110110;			
 		end
 		17: begin
 			atemp = 6'b110001;			
