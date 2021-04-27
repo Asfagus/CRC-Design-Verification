@@ -923,9 +923,11 @@ module dut(input clk, input reset, input pushin,input [8:0] datain,
 					if(RD==0)begin
 						pushout_d = 1;
 						dataout_d = 10'b0101111100;
+						RD_d = ~RD;
 					end else begin
 						pushout_d = 1;
 						dataout_d = 10'b1010000011;
+						RD_d = ~RD;
 					end
 					ns = IDLE;
 				end
