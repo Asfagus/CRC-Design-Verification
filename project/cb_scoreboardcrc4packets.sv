@@ -46,6 +46,8 @@ class cb_scoreboardcrc4packets extends uvm_scoreboard;
 						//$display("count=%0d,flag=%0d, dout_act from new scbd=%h",count,flag,dout_act);
 						`uvm_fatal(get_type_name(),"4 packets of CRC not received")
 					end
+					else
+				`uvm_info(get_type_name(),$sformatf("4 packets of CRC received"),UVM_MEDIUM)		
 				end
 			end
 		end
