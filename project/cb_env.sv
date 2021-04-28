@@ -10,6 +10,7 @@ cb_scoreboard_datachk scbd_dc;
 cb_scoreboard_checkercrc scbdcrcchecker;
 cb_scoreboard_crc scbdcrc;
 cb_scoreboard_framein scbd_framein;
+cb_scoreboard_frameout scbd_frameout;
 cb_scoreboardcrc4packets scbd_4packets;
 cb_scoreboard_RD scbd_RD;
 
@@ -28,6 +29,7 @@ function void build_phase(uvm_phase phase);
 	scbdcrc=cb_scoreboard_crc::type_id::create("scbdcrc",this);
 	scbdcrcchecker=cb_scoreboard_checkercrc::type_id::create("scbdcrcchecker",this);
 	scbd_framein=cb_scoreboard_framein::type_id::create("scbd_framein",this);
+	scbd_frameout=cb_scoreboard_frameout::type_id::create("scbd_frameout",this);
 	scbd_4packets=cb_scoreboardcrc4packets::type_id::create("cb_scoreboardcrc4packets",this);
 	scbd_RD=cb_scoreboard_RD::type_id::create("scbd_RD",this);
 	
@@ -46,6 +48,9 @@ function void connect_phase(uvm_phase phase);
 	scbd1.message_out2.connect(scbd_4packets.messagecrc4_in_scbd1.analysis_export);// connects scbd1 to scbd_crc4packets
 	scbdcrc.message_out_scbdcrc.connect(scbdcrcchecker.message_in_scbdcrca.analysis_export);
 	scbd0.message_out2.connect(scbd_framein.message_in_scbd_framein.analysis_export);//connects scbd0 to scbd_framein
+	//xl
+	scbd1.message_out3.connect(scbd_frameout.message_in_scbd1b.analysis_export);//connects scbd0 to scbd_framein
+	//wq	
 	scbd1.message_out.connect(scbd_RD.message_in_scbd1.analysis_export);// new connects scbd1 to scbd_RD
 	scbd8b10b.message_out.connect(scbd_RD.message_in_scbd8b10b.analysis_export);
 
