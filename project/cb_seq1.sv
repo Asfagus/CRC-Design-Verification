@@ -11,7 +11,7 @@ endfunction: new
 task body(); // sequence_item requires a task body if it is not there it will generate a warning
 	c=cb_seq_item::type_id::create("cb_seq_item");	
 
-	repeat(3000)begin
+	repeat(2)begin
 		start_item(c);
 		c.randomize();		//Randomize the "data" part of packet  
 		finish_item(c);
