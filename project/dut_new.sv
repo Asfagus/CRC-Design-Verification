@@ -478,7 +478,7 @@ module dut(input clk, input reset, input pushin,input [8:0] datain,
 								end
 								RD_d = RD;
 							end
-							8'h3c:begin
+							/*8'h3c:begin
 								if(RD==0)begin
 									pushout_d=1;
 									dataout_d = 10'b1001111100;
@@ -487,7 +487,7 @@ module dut(input clk, input reset, input pushin,input [8:0] datain,
 									dataout_d = 10'b0110000011;
 								end
 								RD_d = ~RD;
-							end
+							end*/
 							8'h5c:begin
 								if(RD==0)begin
 									pushout_d=1;
@@ -538,7 +538,7 @@ module dut(input clk, input reset, input pushin,input [8:0] datain,
 								end
 								RD_d = RD;
 							end
-						8'hF7:begin
+						/*8'hF7:begin
 							if(RD==0)begin
 								pushout_d=1;
 								dataout_d = 10'b0001010111;
@@ -547,7 +547,7 @@ module dut(input clk, input reset, input pushin,input [8:0] datain,
 								dataout_d = 10'b1110101000;
 							end
 							RD_d = RD;
-						end
+						end*/
 						8'hFB:begin
 							if(RD==0)begin
 								pushout_d=1;
