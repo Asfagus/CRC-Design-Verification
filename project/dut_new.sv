@@ -56,7 +56,7 @@ module dut(input clk, input reset, input pushin,input [8:0] datain,
 			data_buffer<=0;
 			rst_n=1;
 		end else begin
-			RD<= RD_d;
+			RD<= RD_d;	//change to 3 then try to test current disparity
 			count<=count_d;
 			dataout<=dataout_d;
 			pushout<=pushout_d;

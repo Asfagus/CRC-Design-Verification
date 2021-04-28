@@ -52,7 +52,6 @@ function void connect_phase(uvm_phase phase);
 	scbd1.message_out3.connect(scbd_frameout.message_in_scbd1b.analysis_export);//connects scbd0 to scbd_framein
 	//wq	
 	scbd1.message_out.connect(scbd_RD.message_in_scbd1.analysis_export);// new connects scbd1 to scbd_RD
-	scbd8b10b.message_out.connect(scbd_RD.message_in_scbd8b10b.analysis_export);
 
 endfunction:connect_phase
 
