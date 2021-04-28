@@ -4,8 +4,9 @@ class cb_scoreboard1 extends uvm_scoreboard;
 	`uvm_component_utils(cb_scoreboard1)
 
 	uvm_tlm_analysis_fifo #(momsg) message_in;
-	uvm_analysis_port #(momsg) message_out;
-	uvm_analysis_port #(momsg) message_out1;
+	uvm_analysis_port #(momsg) message_out; // this port goes to scoreboard_dc
+	uvm_analysis_port #(momsg) message_out1;// this port goes to crc scoreboard
+	uvm_analysis_port #(momsg) message_out2;//this port connects to scoreboardcrc4packets
 	momsg m;
 	int flag =0;
 
@@ -17,6 +18,7 @@ class cb_scoreboard1 extends uvm_scoreboard;
 		message_in=new("message_in_momsg",this);
 		message_out=new("message_out_momsg",this);
 		message_out1=new("message_out1_momsg",this);
+		message_out2=new("message_out2_momsg",this);
 	endfunction:build_phase
 
 	task run_phase(uvm_phase phase);
@@ -26,7 +28,8 @@ class cb_scoreboard1 extends uvm_scoreboard;
 		//$display("pushout from Scoreboard1 UVM =%h",m.pushout);	
 		if((m.pushout)) begin
 			//$display("Data from Scoreboard1 UVM =%h",m.dataout);	
-			message_out.write(m);	
+			message_out.write(m);
+			message_out2.write(m);	
 			if(m.dataout==10'b0001010111 ||m.dataout==10'b1110101000) begin
 				flag=1;
 				//$display("Data from Scoreboard1 UVM =%h flag=%d",m.dataout,flag);
