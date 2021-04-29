@@ -12,7 +12,7 @@ task body(); // sequence_item requires a task body if it is not there it will ge
 	c=cb_seq_item::type_id::create("cb_seq_item");	
 
 
-	repeat(4000) begin
+	repeat(3000) begin
 		start_item(c);
 		c.randomize();		//Randomize the "data" part of packet  
 		finish_item(c);

@@ -19,8 +19,10 @@ logic [2:0] b;
 logic [3:0] btemp;
 logic[9:0] dout,dout1,dout_crc,dout_k;
 logic[7:0] kdatain,crcdatain;
-int rd=-1,crc;
+int rd=-1;
+int crc=-1;
 logic k;
+int crcvalidin;
 rand logic[9:0]data_crc[];
 logic[9:0]dout_crc1,dout_crc2,dout_crc3,dout_crc4,dout_crc0,dout_crc5;
 	logic [31:0] crc32_out_buff=32'hffffffff;
@@ -69,7 +71,7 @@ endfunction: update_rd_b
 
 function int update_rd_k(input logic[9:0] dout);
 	int c1,c0,rd_new, diff;
-    //$display("I am inside the function kdatain=%0b",kdatain);
+    $display("++++++++++++++++++++++++++I am inside the function kdatain=%0h",kdatain);
     c1=$countones(dout);
     c0=$countbits(dout,'0);
 	//$display("no of 1=%0d",c1);
@@ -365,10 +367,14 @@ function int update_crc(input logic[7:0] crcdatain);
 endfunction: update_crc
 
 task disparity(mimsg m);
+int invalid_k=0;
 a=m.datain;   
 b=m.datain>>5;
 k=m.datain>>8;
+if(k==0) begin
 crcdatain=m.datain;
+crcvalidin=1;
+end
 //$display("********datain=%b a=%0b b=%b k=%b",m.datain,a,b,k);
 	if(k==1 && m.datain!=9'b110111100) begin
 		kdatain=m.datain;
@@ -411,6 +417,9 @@ crcdatain=m.datain;
 			8'hfe: begin
 				dout=10'b0001011110;
 			end
+			default: begin
+				invalid_k=1;
+			end
 			endcase
 		//$display("1.Expected output=%0b",dout);
 		end
@@ -452,10 +461,15 @@ crcdatain=m.datain;
 			8'hfe: begin
 				dout=10'b1110100001;
 			end
+			default: begin
+				invalid_k=1;
+			end
 			endcase
 			//$display("2.Expected output=%0b",dout);
 		end
+		if(invalid_k!=1) begin
 		rd=update_rd_k(dout);
+		end
 		//$display("Final RD_k for out=%0d dout=%h",rd,dout);
 	end
  if(k==0) begin
@@ -746,6 +760,7 @@ crcdatain=m.datain;
  end
  //$display(" debug datain=%h",m.datain);
 	if(m.datain==9'b110111100) begin
+		if(crc!=32'hffffffff) begin
 		dout_crc0 = k_crc_disparity(8'b11110111);
 		$display("K23.7 ******send CRC now=%h rd =%d",dout_crc0,rd);
 		dout_crc1=crc_disparity(crc[7:0]);
@@ -756,9 +771,11 @@ crcdatain=m.datain;
 		//$display("crc3=%h",dout_crc3);
 		dout_crc4=crc_disparity(crc[31:24]);
 		//$display("crc4=%h",dout_crc4);
-		dout_crc5 = k_crc_disparity(8'b10111100);
-		$display("K28.5=%h rd=%0d",dout_crc5,rd);
+		end
+		dout = k_crc_disparity(8'b10111100);
+		$display("K28.5=%h rd=%0d",dout,rd);		
 		crc32_out_buff=32'hffffffff;
+		crc=32'hffffffff;
 	end	
 endtask
 
@@ -786,6 +803,7 @@ endtask
 
 
 function logic[9:0] k_crc_disparity(input logic [7:0]crc);
+int invalid_k=0;
 		kdatain=crc;
 		if(rd==-1) begin
 			case(kdatain)
@@ -825,6 +843,9 @@ function logic[9:0] k_crc_disparity(input logic [7:0]crc);
 			end
 			8'hfe: begin
 				dout=10'b0001011110;
+			end
+			default: begin
+				invalid_k=1;
 			end
 			endcase
 		//$display("1.Expected output=%0b",dout);
@@ -868,10 +889,15 @@ function logic[9:0] k_crc_disparity(input logic [7:0]crc);
 			8'hfe: begin
 				dout=10'b1110100001;
 			end
+			default: begin
+				invalid_k=1;
+			end
 			endcase
 			//$display("2.Expected output=%0b",dout);
 		end
+		if(invalid_k!=1) begin
 		rd=update_rd_k(dout);
+		end
 		//$display("Final RD_k for out=%0d",rd_k);
 return dout;
 endfunction
@@ -1184,7 +1210,7 @@ b=crc>>5;
 		//$display("Final RD for btemp=%0d",rd);
 		//crc=update_crc(crcdatain);
 		dout_crc={btemp,atemp};
- $display(" crc=%h,dout_crc=%h final rd=%0d",crc,dout_crc,rd);
+ $display(" i am from 8b10bcrc=%h,dout_crc=%h final rd=%0d",crc,dout_crc,rd);
  
  return dout_crc;
 endfunction
@@ -1200,7 +1226,8 @@ endfunction
 			//if(dout!=10'b0101111100 && dout!=10'b1010000011) begin
 				//$display("dout=%h",dout);
 			
-				message_out.write(dout);	
+				message_out.write(dout);
+				$display("from 8b10b scoreboard+++++++++++++++++++rd=%d data dout =%h",rd,dout);
 			//end	
 		end
 	end

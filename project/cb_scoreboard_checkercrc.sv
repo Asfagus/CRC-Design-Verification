@@ -21,12 +21,12 @@ class cb_scoreboard_checkercrc extends uvm_scoreboard;
 		message_in_scbdcrca=new("message_in_scbdcrca",this);
 	endfunction:build_phase
 	task compare();
-		for(int i=0;i<6;i++) begin
+		for(int i=0;i<5;i++) begin
 			if(finalcrc_dut[i]==finalcrc_scb[i]) begin
 				`uvm_info(get_type_name(),$sformatf("Data Coded Correctly ed:%h, act:%h ",finalcrc_scb[i],finalcrc_dut[i]),UVM_MEDIUM)
 			end
 				else begin
-				`uvm_error("Data Mismatch",$sformatf("Failed ed:%h,act:%h",finalcrc_scb[i],finalcrc_dut[i]))
+				`uvm_error("Data CRC Mismatch",$sformatf("Failed ed:%h,act:%h",finalcrc_scb[i],finalcrc_dut[i]))
 				end
 			
 		end
@@ -37,7 +37,7 @@ class cb_scoreboard_checkercrc extends uvm_scoreboard;
 		forever begin
 			message_in_scbd1a.get(m_act);	
 			dout_act=m_act.dataout;
-			if(dout_act==10'b0001010111 || dout_act==10'b1110101000) begin
+			if(dout_act==10'b0001010111 || dout_act==10'b1110101000) begin //k23.7
 			flag_d=1;
 			//$display("Received start if CRC from DUT");
 			count_d=0;
@@ -47,7 +47,7 @@ class cb_scoreboard_checkercrc extends uvm_scoreboard;
 			count_d=count_d+1;
 			//$display("CRC if 1. Received = %h",dout_act);
 			end
-			if(dout_act==10'b0101111100 || dout_act==10'b1010000011) begin
+			if(count_d==5) begin
 			flag_d=0;
 			compare();
 			/*$display("Call compare logic \n %h \n %h",finalcrc_dut,finalcrc_scb);

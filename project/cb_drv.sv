@@ -4,7 +4,7 @@ class cb_drv extends uvm_driver #(cb_seq_item);
 
 cb_seq_item message_received;
 
-logic ctrl;
+rand logic ctrl;
 
 virtual encoder_intf xx;// interface and driver are connected// Virtual because it was static
 
