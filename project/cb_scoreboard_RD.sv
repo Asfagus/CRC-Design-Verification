@@ -64,6 +64,9 @@ class cb_scoreboard_RD extends uvm_scoreboard;
 			checkRD(rd_act); //Compares to check if equal
 			dout_act=data_out(m_act);   //stores Output data in variable
 			rd_act=update_rd_act(rd_act,dout_act);   //stores Output data in variable
+			if(m_act.dataout==10'h17c || m_act.dataout==10'h283) begin
+			rd_act=-1;
+			end
 		end
 	endtask:run_phase
 		

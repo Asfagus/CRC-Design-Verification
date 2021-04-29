@@ -368,6 +368,7 @@ endfunction: update_crc
 
 task disparity(mimsg m);
 int invalid_k=0;
+//int rd=-1;
 a=m.datain;   
 b=m.datain>>5;
 k=m.datain>>8;
@@ -776,6 +777,7 @@ end
 		$display("K28.5=%h rd=%0d",dout,rd);		
 		crc32_out_buff=32'hffffffff;
 		crc=32'hffffffff;
+		rd=-1;
 	end	
 endtask
 
