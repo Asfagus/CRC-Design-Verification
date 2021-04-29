@@ -12,6 +12,7 @@ endfunction: build_phase
 
 
 task run_phase(uvm_phase phase);
+	uvm_top.print_topology();
 	sq1=cb_seq1::type_id::create("cb_seq1",this);// build the sequences here in this run phase task
 	phase.raise_objection(this);// raise and drop objection reqd for running the simulation ??
 	sq1.start(env1.agnt1.sqr);//drive sequence to sequencer in the test
