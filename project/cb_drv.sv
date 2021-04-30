@@ -24,15 +24,16 @@ task doWritek(reg [7:0] data,reg start);	//Sends control packets
 		xx.datain={ctrl,data};	//9 bit data
 		xx.pushin=1;				
 		xx.startin=start;
+		ctrl=1'b0;
 endtask:doWritek 
-
+//constraint c4{ctrl==0;};
 task doWrited(cb_seq_item m);	//Sends Data Packets
 	@(posedge(xx.clk)) #1;
-		xx.reset=0;
-		ctrl=1'b0;
+		xx.reset=0;		
 		xx.pushin=1;
 		xx.startin=0;
 		for (int i =4; i<m.data.size-1;i++)begin
+			std::randomize(ctrl) with {if(ctrl==0) m.data[i] inside {[0:255]}; if(ctrl==1) m.data[i] inside {8'h1c,8'h5c,8'h7c,8'h9c,8'hdc,8'hfb,8'hfd,8'hfe};};
 			xx.datain={ctrl,m.data[i]};
 			if(i<m.data.size-2)	//added to avoid last data double clocking
 				@(posedge(xx.clk)); #1;
