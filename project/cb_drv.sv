@@ -5,7 +5,6 @@ class cb_drv extends uvm_driver #(cb_seq_item);
 cb_seq_item message_received;
 
 rand logic ctrl;
-
 virtual encoder_intf xx;// interface and driver are connected// Virtual because it was static
 
 function new(string name="cb_drv",uvm_component parent =null);
@@ -34,6 +33,9 @@ task doWrited(cb_seq_item m);	//Sends Data Packets
 		xx.startin=0;
 		for (int i =4; i<m.data.size-1;i++)begin
 			std::randomize(ctrl) with {if(ctrl==0) m.data[i] inside {[0:255]}; if(ctrl==1) m.data[i] inside {8'h1c,8'h5c,8'h7c,8'h9c,8'hdc,8'hfb,8'hfd,8'hfe};};
+			//ctrl=1'b1; // uncomment this and the below line to test the constraint when only control pkts are sent
+			//std::randomize(m.data[i]) with {m.data[i] inside {8'h1c,8'h5c,8'h7c,8'h9c,8'hdc,8'hfb,8'hfd,8'hfe};};
+			xx.datain={ctrl,m.data[i]};
 			xx.datain={ctrl,m.data[i]};
 			if(i<m.data.size-2)	//added to avoid last data double clocking
 				@(posedge(xx.clk)); #1;

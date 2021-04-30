@@ -17,7 +17,8 @@ logic [2:0] b;
 logic [3:0] btemp;
 logic[9:0] dout,dout1,dout_crc,dout_k;
 logic[7:0] kdatain,crcdatain;
-int rd=-1,crc=-1;
+int rd=-1;
+int crc =-1;
 logic k;
 
 rand logic[9:0]data_crc[];
@@ -407,7 +408,7 @@ end
 				dout=10'b0001010111;
 			end
 			8'hfb: begin
-				dout=10'b1110100100;
+				dout=10'b0001011011;
 			end
 			8'hfd: begin
 				dout=10'b0001011101;
@@ -753,6 +754,9 @@ end
 	crc=update_crc(crcdatain);
 	//$display("crc=%h",crc);
 	end
+	else begin
+		crc=-1;
+	end
  end
  //$display(" debug datain=%h",m.datain);
  
@@ -768,6 +772,13 @@ end
 		//$display("crc3=%h",dout_crc3);
 		dout_crc4=crc_disparity(crc[31:24]);
 		//$display("crc4=%h",dout_crc4);
+		end
+		else begin
+		dout_crc0 = k_crc_disparity(8'b11110111);
+		dout_crc1 = crc_disparity(crc[7:0]);
+		dout_crc2 = crc_disparity(crc[15:8]);
+		dout_crc3 = crc_disparity(crc[23:16]);
+		dout_crc4 = crc_disparity(crc[31:24]);
 		end
 		dout = k_crc_disparity(8'b10111100);
 		//$display("K28.5=%h",dout_crc5);
@@ -834,7 +845,7 @@ function logic[9:0] k_crc_disparity(input logic [7:0]crc);
 				dout=10'b0001010111;
 			end
 			8'hfb: begin
-				dout=10'b1110100100;
+				dout=10'b0001011011;
 			end
 			8'hfd: begin
 				dout=10'b0001011101;

@@ -410,7 +410,7 @@ end
 				dout=10'b0001010111;
 			end
 			8'hfb: begin
-				dout=10'b1110100100;
+				dout=10'b0001011011;
 			end
 			8'hfd: begin
 				dout=10'b0001011101;
@@ -758,9 +758,12 @@ end
 	crc=update_crc(crcdatain);
 	//$display("crc=%h",crc);
 	end
+	else begin
+		crc=-1;
+	end
  end
  //$display(" debug datain=%h",m.datain);
-	if(m.datain==9'b110111100) begin
+	if(m.datain==9'b110111100) begin // K28.5 1bc
 		if(crc!=32'hffffffff) begin
 		dout_crc0 = k_crc_disparity(8'b11110111);
 		$display("K23.7 ******send CRC now=%h rd =%d",dout_crc0,rd);
@@ -772,6 +775,13 @@ end
 		//$display("crc3=%h",dout_crc3);
 		dout_crc4=crc_disparity(crc[31:24]);
 		//$display("crc4=%h",dout_crc4);
+		end
+		else begin
+		dout_crc0 = k_crc_disparity(8'b11110111);
+		dout_crc1 = crc_disparity(crc[7:0]);
+		dout_crc2 = crc_disparity(crc[15:8]);
+		dout_crc3 = crc_disparity(crc[23:16]);
+		dout_crc4 = crc_disparity(crc[31:24]);
 		end
 		dout = k_crc_disparity(8'b10111100);
 		$display("K28.5=%h rd=%0d",dout,rd);		
@@ -838,7 +848,7 @@ int invalid_k=0;
 				dout=10'b0001010111;
 			end
 			8'hfb: begin
-				dout=10'b1110100100;
+				dout=10'b0001011011;
 			end
 			8'hfd: begin
 				dout=10'b0001011101;
