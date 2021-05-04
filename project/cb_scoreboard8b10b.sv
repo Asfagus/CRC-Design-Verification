@@ -376,7 +376,14 @@ if(k==0) begin
 crcdatain=m.datain;
 crcvalidin=1;
 end
-//$display("********datain=%b a=%0b b=%b k=%b",m.datain,a,b,k);
+if(k==1 && m.datain!=9'h13c && m.datain!=9'h1bc) begin
+$display("i somehow got here");
+crcdatain=m.datain;
+$display(" crc from this special place before doing xor =%h crcdatin=%h",crc,crcdatain);
+crc = crc ^ 32'hffffffff;
+$display(" crc from this special place =%h",crc);
+end
+$display("********datain=%b a=%0b b=%b k=%b",m.datain,a,b,k);
 	if(k==1 && m.datain!=9'b110111100) begin
 		kdatain=m.datain;
 		if(rd==-1) begin
@@ -472,7 +479,14 @@ end
 		rd=update_rd_k(dout);
 		end
 		//$display("Final RD_k for out=%0d dout=%h",rd,dout);
+		     //if(k==1) begin
+		    //if(m.datain!=9'b110111100) begin
+			//$display("///////////////////////////////////////////////////////////////I am inside k==1 loop");
+			//crc=crc ^ 32'hffffffff;
+			//$display("********---from 8b10b--------------datain =%h contol pakcjet crc=%h",m.datain,crc);
+			//end
 	end
+	
  if(k==0) begin
 	if(rd==-1) begin
       //$display("I am inside if loop of 5bits rd=%0d",rd);
@@ -753,20 +767,20 @@ end
 		//dout_crc={btemp,atemp};
 		dout={btemp,atemp};
 		//$display("3.Expected output=%0h Final RD=%0d",dout,rd);
-		
-	if(k==0) begin
+	//$display("///////////////////////////////////////////////////////////////I am inside k==1 loop");	
+	//if(k==0) begin
 	crc=update_crc(crcdatain);
 	//$display("crc=%h",crc);
-	end
-	else begin
-		crc=-1;
-	end
+	//end
  end
+
  //$display(" debug datain=%h",m.datain);
 	if(m.datain==9'b110111100) begin // K28.5 1bc
-		if(crc!=32'hffffffff) begin
+		//if(crc!=32'hffffffff) begin
 		dout_crc0 = k_crc_disparity(8'b11110111);
 		$display("K23.7 ******send CRC now=%h rd =%d",dout_crc0,rd);
+		//crc=~crc;
+		$display("K23.7 ******send flipped CRC now=%h  $$$$$$$$$$$$$$$$$$$",crc);
 		dout_crc1=crc_disparity(crc[7:0]);
 		//$display("crc1=%h",dout_crc1);
 		dout_crc2=crc_disparity(crc[15:8]);
@@ -775,14 +789,14 @@ end
 		//$display("crc3=%h",dout_crc3);
 		dout_crc4=crc_disparity(crc[31:24]);
 		//$display("crc4=%h",dout_crc4);
-		end
-		else begin
+		//end
+		/*else begin
 		dout_crc0 = k_crc_disparity(8'b11110111);
 		dout_crc1 = crc_disparity(crc[7:0]);
 		dout_crc2 = crc_disparity(crc[15:8]);
 		dout_crc3 = crc_disparity(crc[23:16]);
 		dout_crc4 = crc_disparity(crc[31:24]);
-		end
+		end*/
 		dout = k_crc_disparity(8'b10111100);
 		$display("K28.5=%h rd=%0d",dout,rd);		
 		crc32_out_buff=32'hffffffff;

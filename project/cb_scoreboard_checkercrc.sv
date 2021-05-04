@@ -26,7 +26,7 @@ class cb_scoreboard_checkercrc extends uvm_scoreboard;
 				`uvm_info(get_type_name(),$sformatf("Data Coded Correctly ed:%h, act:%h ",finalcrc_scb[i],finalcrc_dut[i]),UVM_MEDIUM)
 			end
 				else begin
-				`uvm_error("Data CRC Mismatch",$sformatf("Failed ed:%h,act:%h",finalcrc_scb[i],finalcrc_dut[i]))
+				`uvm_fatal("Data CRC Mismatch",$sformatf("Failed ed:%h,act:%h",finalcrc_scb[i],finalcrc_dut[i]))
 				end
 			
 		end
