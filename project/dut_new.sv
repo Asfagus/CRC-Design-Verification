@@ -90,7 +90,7 @@ module dut(input clk, input reset, input pushin,input [8:0] datain,
 					pushout_d = 0;
 					startout_d = 0;
 					count_crc_d = 0;
-					flag_d=0;
+					//flag_d=0;
 					if(pushin&startin)begin
 							if(datain==9'b100111100)begin//first K.28.1
 								if(RD==0)begin//RD=-1
@@ -465,7 +465,7 @@ module dut(input clk, input reset, input pushin,input [8:0] datain,
 							end else begin
 								$display("data is invalid");
 							end
-							flag_d=1;
+							//flag_d=1;
 							ns = DATA;
 						end else begin
 							crc32_valid_in=0;
@@ -590,7 +590,7 @@ module dut(input clk, input reset, input pushin,input [8:0] datain,
 			end
 
 				CRC:begin//count=3, ns=28_5
-					if(flag==1)begin
+					//if(flag==1)begin
 					case(count_crc)
 						0:begin
 							buffer_d = crc32_out[7:0];
@@ -609,7 +609,7 @@ module dut(input clk, input reset, input pushin,input [8:0] datain,
 							//$display("from DUT CRC4=%0h",buffer_d);
 						end
 					endcase
-					end else begin
+					/*end else begin
 						case(count_crc)
 						0:begin
 							buffer_d =8'hff;
@@ -628,7 +628,7 @@ module dut(input clk, input reset, input pushin,input [8:0] datain,
 							//$display("from DUT CRC4=%0h",buffer_d);
 						end
 					endcase
-					end
+					end*/
 					case(buffer_d[4:0])
 							0:begin
 								if(RD==0)begin
