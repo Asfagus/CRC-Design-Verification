@@ -23,6 +23,7 @@ int rd=-1;
 int crc=-1;
 logic k;
 int crcvalidin;
+int data_pkts_seen=0;
 rand logic[9:0]data_crc[];
 logic[9:0]dout_crc1,dout_crc2,dout_crc3,dout_crc4,dout_crc0,dout_crc5;
 	logic [31:0] crc32_out_buff=32'hffffffff;
@@ -375,14 +376,15 @@ k=m.datain>>8;
 if(k==0) begin
 crcdatain=m.datain;
 crcvalidin=1;
+data_pkts_seen=1;
 end
-if(k==1 && m.datain!=9'h13c && m.datain!=9'h1bc) begin
+/*if(k==1 && m.datain!=9'h13c && m.datain!=9'h1bc) begin
 $display("i somehow got here");
 crcdatain=m.datain;
 $display(" crc from this special place before doing xor =%h crcdatin=%h",crc,crcdatain);
 crc = crc ^ 32'hffffffff;
 $display(" crc from this special place =%h",crc);
-end
+end*/
 $display("********datain=%b a=%0b b=%b k=%b",m.datain,a,b,k);
 	if(k==1 && m.datain!=9'b110111100) begin
 		kdatain=m.datain;
@@ -780,7 +782,12 @@ $display("********datain=%b a=%0b b=%b k=%b",m.datain,a,b,k);
 		dout_crc0 = k_crc_disparity(8'b11110111);
 		$display("K23.7 ******send CRC now=%h rd =%d",dout_crc0,rd);
 		//crc=~crc;
-		$display("K23.7 ******send flipped CRC now=%h  $$$$$$$$$$$$$$$$$$$",crc);
+		if(data_pkts_seen==0) begin
+			//$display("\n \n BEFORRRRRRRRRRRRRRRRRRRRRRRRRRRRRr \n\n=%h",crc);
+			crc=~crc;
+			//$display("\n \n AFTERRRRRRRRRRRRRRRRRRRRRRRRRRRRRr \n\n=%h",crc);
+		end
+		//$display("K23.7 ******send flipped CRC now=%h  $$$$$$$$$$$$$$$$$$$",crc);
 		dout_crc1=crc_disparity(crc[7:0]);
 		//$display("crc1=%h",dout_crc1);
 		dout_crc2=crc_disparity(crc[15:8]);
@@ -802,6 +809,7 @@ $display("********datain=%b a=%0b b=%b k=%b",m.datain,a,b,k);
 		crc32_out_buff=32'hffffffff;
 		crc=32'hffffffff;
 		rd=-1;
+		data_pkts_seen=0;
 	end	
 endtask
 

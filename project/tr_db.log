@@ -85,3 +85,16 @@
   CREATE_STREAM @0 {NAME:cb_seq1 T:Transactions SCOPE:uvm_test_top.cb_env1.agnt1.cb_seqr STREAM:1637}
   CREATE_STREAM @0 {NAME:cb_seq1 T:Transactions SCOPE:uvm_test_top.cb_env1.agnt1.cb_seqr STREAM:1637}
   CREATE_STREAM @0 {NAME:cb_seq1 T:Transactions SCOPE:uvm_test_top.cb_env1.agnt1.cb_seqr STREAM:1637}
+  CREATE_STREAM @0 {NAME:cb_seq1 T:Transactions SCOPE:uvm_test_top.cb_env1.agnt1.cb_seqr STREAM:1637}
+  CREATE_STREAM @0 {NAME:cb_seq1 T:Transactions SCOPE:uvm_test_top.cb_env1.agnt1.cb_seqr STREAM:1637}
+  CREATE_STREAM @0 {NAME:cb_seq1 T:Transactions SCOPE:uvm_test_top.cb_env1.agnt1.cb_seqr STREAM:1637}
+  CREATE_STREAM @0 {NAME:cb_seq1 T:Transactions SCOPE:uvm_test_top.cb_env1.agnt1.cb_seqr STREAM:1637}
+  CREATE_STREAM @0 {NAME:cb_seq1 T:Transactions SCOPE:uvm_test_top.cb_env1.agnt1.cb_seqr STREAM:1637}
+  CREATE_STREAM @0 {NAME:cb_seq1 T:Transactions SCOPE:uvm_test_top.cb_env1.agnt1.cb_seqr STREAM:1637}
+  CREATE_STREAM @0 {NAME:cb_seq1 T:Transactions SCOPE:uvm_test_top.cb_env1.agnt1.cb_seqr STREAM:1637}
+  CREATE_STREAM @0 {NAME:cb_seq1 T:Transactions SCOPE:uvm_test_top.cb_env1.agnt1.cb_seqr STREAM:1637}
+  CREATE_STREAM @0 {NAME:cb_seq1 T:Transactions SCOPE:uvm_test_top.cb_env1.agnt1.cb_seqr STREAM:1637}
+  CREATE_STREAM @0 {NAME:cb_seq1 T:Transactions SCOPE:uvm_test_top.cb_env1.agnt1.cb_seqr STREAM:1637}
+  CREATE_STREAM @0 {NAME:cb_seq1 T:Transactions SCOPE:uvm_test_top.cb_env1.agnt1.cb_seqr STREAM:1637}
+  CREATE_STREAM @0 {NAME:cb_seq1 T:Transactions SCOPE:uvm_test_top.cb_env1.agnt1.cb_seqr STREAM:1637}
+  CREATE_STREAM @0 {NAME:cb_seq1 T:Transactions SCOPE:uvm_test_top.cb_env1.agnt1.cb_seqr STREAM:1637}
