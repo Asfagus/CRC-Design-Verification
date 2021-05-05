@@ -48,7 +48,7 @@ class cb_scoreboard_datachk extends uvm_scoreboard;
 		//$display(dout_ed1,dout_act);
 		if (dout_ed1==dout_act)
 			`uvm_info(get_type_name(),$sformatf("Data Coded Correctly ed:%h, act:%h ",dout_ed1,dout_act),UVM_MEDIUM)
-		else `uvm_fatal("Data Mismatch",$sformatf("Failed ed:%h,act:%h",dout_ed1,dout_act));
+		else `uvm_error("Data Mismatch",$sformatf("Failed ed:%h,act:%h",dout_ed1,dout_act));
 	endtask : compare
 	
 	task run_phase(uvm_phase phase);

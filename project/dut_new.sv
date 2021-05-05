@@ -34,7 +34,7 @@ module dut(input clk, input reset, input pushin,input [8:0] datain,
 
 	//assign ones = $countbits(dataout_d,'1);
 	//assign zeros = $countbits(dataout_d,'0);
-	assign crc32_in = datain[7:0];
+	assign crc32_in = datain[7:0]; //akshit
 	//assign crc32_out1 = crc32_out;
 	//assign rst_n = reset;
 	
@@ -59,7 +59,7 @@ module dut(input clk, input reset, input pushin,input [8:0] datain,
 			RD<= RD_d;	//change to 3 then try to test current disparity
 			count<=count_d;
 			dataout<=dataout_d;
-			pushout<=pushout_d;
+			pushout<=pushout_d; //first follow pushin, then 5 more clock cycles for k23.7,4crc,k28.5
 			startout<=startout_d;
 			cs<=ns;
 			count_crc<= count_crc_d;

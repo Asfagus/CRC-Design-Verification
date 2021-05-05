@@ -10,6 +10,8 @@ class cb_seq_item extends uvm_sequence_item;
 	
 	//constraint c2 {data[4:$-1]!==8'h3C;data[4:$-1]!==8'hBC;data[4:$-1]!==8'hF7;};//actual data must not have control bits 
 	
+	constraint c4{data[4]==8'h0a;data[5]==8'h0c;data[6]==8'h0e;data.size()==8;};//sets data to known values
+	
 	constraint c3 {
 		foreach (data[i]){
 			if (i==0 ||i==1 ||i==2 ||i==3)

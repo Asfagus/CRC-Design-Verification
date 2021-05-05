@@ -5,6 +5,7 @@ class cb_drv extends uvm_driver #(cb_seq_item);
 cb_seq_item message_received;
 
 rand logic ctrl;
+rand logic tb_pushin;
 virtual encoder_intf xx;// interface and driver are connected// Virtual because it was static
 
 function new(string name="cb_drv",uvm_component parent =null);
@@ -21,7 +22,9 @@ task doWritek(reg [7:0] data,reg start);	//Sends control packets
 	 	xx.reset=0;
 	 	ctrl=1'b1;		//9th bit control 
 		xx.datain={ctrl,data};	//9 bit data
-		xx.pushin=1;				
+		xx.pushin=1;	
+		//std::randomize(tb_pushin);	
+		//xx.pushin=tb_pushin;			
 		xx.startin=start;
 		ctrl=1'b0;
 endtask:doWritek 
@@ -29,14 +32,16 @@ endtask:doWritek
 task doWrited(cb_seq_item m);	//Sends Data Packets
 	@(posedge(xx.clk)) #1;
 		xx.reset=0;		
-		xx.pushin=1;
+		//xx.pushin=1;
+		
 		xx.startin=0;
 		for (int i =4; i<m.data.size-1;i++)begin
 			std::randomize(ctrl) with {if(ctrl==0) m.data[i] inside {[0:255]}; if(ctrl==1) m.data[i] inside {8'h1c,8'h5c,8'h7c,8'h9c,8'hdc,8'hfb,8'hfd,8'hfe};};
 			//ctrl=1'b1; // uncomment this and the below line to test the constraint when only control pkts are sent
 			//std::randomize(m.data[i]) with {m.data[i] inside {8'h1c,8'h5c,8'h7c,8'h9c,8'hdc,8'hfb,8'hfd,8'hfe};};
 			xx.datain={ctrl,m.data[i]};
-			xx.datain={ctrl,m.data[i]};
+			std::randomize(tb_pushin);	
+			xx.pushin=tb_pushin;
 			if(i<m.data.size-2)	//added to avoid last data double clocking
 				@(posedge(xx.clk)); #1;
 			//$display("Data");
