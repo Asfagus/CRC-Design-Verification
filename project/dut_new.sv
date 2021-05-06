@@ -112,6 +112,7 @@ module dut(input clk, input reset, input pushin,input [8:0] datain,
 					end
 				end
 				K28:begin
+					startout_d=0;
 					if(pushin)begin
 						crc32_valid_in = 0;
 						if(datain==9'b100111100 & count<2)begin
@@ -145,6 +146,7 @@ module dut(input clk, input reset, input pushin,input [8:0] datain,
 							$display("K.28.1 has error");
 						end
 					end else begin
+						pushout_d=0;
 						ns = K28;
 						$display("pushin has error during K.28.1");
 					end
@@ -584,6 +586,7 @@ module dut(input clk, input reset, input pushin,input [8:0] datain,
 						ns = DATA;
 					end
 				end else begin
+					crc32_valid_in=0;
 					pushout_d = 0;
 					ns = DATA;
 				end
