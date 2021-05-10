@@ -582,6 +582,9 @@ module dut(input clk, input reset, input pushin,input [8:0] datain,
 							end
 							RD_d = RD;
 						end
+						default: begin
+							pushout_d=0;
+						end
 						endcase
 						ns = DATA;
 					end
