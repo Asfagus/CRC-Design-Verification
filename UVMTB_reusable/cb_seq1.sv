@@ -54,13 +54,13 @@ endtask : Mid2
 
 task Tail(cb_seq_item m1);
 		if(m1.data.size()) begin
-		//$display("m1.data.size()=%0d",m1.data.size());
-		sdata[m1.data.size()-1]=9'h1BC;
-		//$display("sdata[bc]=%h",sdata[m1.data.size()]);
+			//$display("m1.data.size()=%0d",m1.data.size());
+			sdata[m1.data.size()-1]=9'h1BC;
+			//$display("sdata[bc]=%h",sdata[m1.data.size()]);
 		end
 		else begin
-		sdata[$+1]=9'h1BC;
-		//$display("sdata[bc]=%h",sdata[$+1]);
+			sdata[$+1]=9'h1BC;
+			//$display("sdata[bc]=%h",sdata[$+1]);
 		end
 
 endtask : Tail

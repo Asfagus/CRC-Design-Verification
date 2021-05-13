@@ -116,15 +116,16 @@ task doDatapkt(cb_seq_item m);
 	for(int i=0;i<m.data.size();i++) begin
 		@(posedge(xx.clk)); #1;
 		if(i==0) begin
-		//$display("I am inside for loop Do empty task xx.datain=%h,m.data[i]=%h",xx.datain,m.data[i]);
-		xx.pushin=1;
-		xx.startin=1;
-		xx.datain=m.data[i];
+			//$display("I am inside for loop Do empty task xx.datain=%h,m.data[i]=%h",xx.datain,m.data[i]);
+			xx.pushin=1;
+			xx.startin=1;
+			xx.datain=m.data[i];
 		end
 		else begin
-		xx.pushin=1;
-		xx.startin=0;
-		xx.datain=m.data[i];
+			if (m.data[i][8]==0)xx.pushin=$urandom_range(0,1); //Only random pushin for data packets not control packets
+			else xx.pushin=1;
+			xx.startin=0;
+			xx.datain=m.data[i];
 		end
 	end	
 	repeat($urandom_range(10,20)) begin	//wait for 10-20 clock cycles
