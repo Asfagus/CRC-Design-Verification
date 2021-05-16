@@ -23,6 +23,7 @@ import uvm_pkg::*;
 `include "cb_scoreboard_framein.sv"
 `include "cb_scoreboard_frameout.sv"
 `include "cb_scoreboard_RD.sv"
+`include "cb_scoreboard_illegal.sv"
 `include "cb_env.sv"
 `include "cb_test.sv"
 
