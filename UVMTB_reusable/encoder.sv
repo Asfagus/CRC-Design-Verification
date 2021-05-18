@@ -1,6 +1,6 @@
 // Converts the interface to dut signals
 
-`include "dut_new.sv"
+`include "dut.sv"
 module encoder(encoder_intf.dut m);
 
 wire [9:0] dout;
