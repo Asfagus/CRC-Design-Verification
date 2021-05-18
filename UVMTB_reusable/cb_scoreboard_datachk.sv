@@ -35,9 +35,14 @@ class cb_scoreboard_datachk extends uvm_scoreboard;
 	function logic[9:0] data_out(momsg m_act);
 		casez (m_act.dataout)//Data coming from Output 
 			10'h27C,10'h183:data_out=m_act.dataout;//$display("K.28.1: Control packet");
-			10'h17C,10'h283:begin data_out=m_act.dataout;crcstart=0;$display("K.28.5: Ending Full Packet");	end 	//This will not occur since data will block 
-			10'h57,10'h3A8:begin data_out=m_act.dataout;crcstart=1;$display("K.23.7: Ending data,CRC next");end//$display("K.23.7: Ending data,CRC next");	
-			10'b??????????:begin data_out=m_act.dataout;end//$display("Data Packet");//dout_ed1=dout_ed;					//This might interfere with other cases with Case
+			10'h17C,10'h283:begin data_out=m_act.dataout;
+								crcstart=0; 
+							end//$display("K.28.5: Ending Full Packet")
+			10'h57,10'h3A8:begin 
+							data_out=m_act.dataout;
+							crcstart=1;
+						   end
+			10'b??????????:data_out=m_act.dataout;
 			
 			default: $display("Illegal Packet");	
 		endcase
@@ -56,7 +61,7 @@ class cb_scoreboard_datachk extends uvm_scoreboard;
 		forever begin
 			if(crcstart==0)
 				message_in_scbd8b10b.get(dout_ed);
-				$display("Sheetha ip to akshit=%h crcstart=%d",dout_ed,crcstart);
+				//$display("Sheetha ip to akshit=%h crcstart=%d",dout_ed,crcstart);
 			
 			
 

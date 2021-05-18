@@ -377,11 +377,11 @@ data_pkts_seen=1;
 
 end
 if(k==1 && m.datain!=9'h13c && m.datain!=9'h1bc) begin //K28.5 and K28.1 i dont do the the xor
-$display("i somehow got here");
+//$display("i somehow got here");
 crcdatain=m.datain;
-$display(" crc from this special place before doing xor =%h crcdatin=%h",crc,crcdatain);
+//$display(" crc from this special place before doing xor =%h crcdatin=%h",crc,crcdatain);
 //crc = crc ^ 32'hffffffff;
-$display(" crc from this special place =%h",crc);
+//$display(" crc from this special place =%h",crc);
 end
 //$display("********datain=%b a=%0b b=%b k=%b",m.datain,a,b,k);
 	if(k==1 && m.datain!=9'b110111100) begin
@@ -479,7 +479,7 @@ end
 		rd=update_rd_k(dout);
 		end
 		//$display("Final RD_k for out=%0d",rd_k);
-		$display("///////////////////////////////////////////////////////////////I am inside k==1 loop");
+		//$display("///////////////////////////////////////////////////////////////I am inside k==1 loop");
 			
 	end
  if(k==0) begin
@@ -1224,7 +1224,7 @@ b=crc>>5;
 		//$display("Final RD for btemp=%0d",rd);
 		//crc=update_crc(crcdatain);
 		dout_crc={btemp,atemp};
- $display(" crc=%h,dout_crc=%h updated rd=%0d",crc,dout_crc,rd);
+ //$display(" crc=%h,dout_crc=%h updated rd=%0d",crc,dout_crc,rd);
  
  return dout_crc;
 endfunction
@@ -1236,7 +1236,7 @@ endfunction
 			message_in_scbdcrc.get(m);
 			if(m.pushin) begin
 				disparity(m);
-				$display("I am writing to scoreboard crc checker");
+				//$display("I am writing to scoreboard crc checker");
 				message_out_scbdcrc.write(dout_crc0);
 				//$display("$$$$$from scbd crc=%h",dout_crc0);
 				message_out_scbdcrc.write(dout_crc1);

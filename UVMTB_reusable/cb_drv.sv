@@ -67,8 +67,8 @@ endtask: doWait
 
 task drive (cb_seq_item m);
 	//Send packets to DUT
-	$display("Driving Packet of VAlues :%p",m.data);
-	$display("Driving Packet of size :%d",m.data.size());
+	//$display("Driving Packet of VAlues :%p",m.data);
+	//$display("Driving Packet of size :%d",m.data.size());
 	//K.28.1
 	doWritek(m.data[0],1'b1);		//Startin High
 	repeat(3)begin
@@ -91,7 +91,7 @@ task doWait(cb_seq_item m);
 endtask: doWait
 task doEmptypkt(cb_seq_item m);
 	xx.reset=0;
-	$display("I am inside Do empty task");
+	//$display("I am inside Do empty task");
 	for(int i=0;i<5;i++) begin
 		@(posedge(xx.clk)); #1;
 		if(i==0) begin

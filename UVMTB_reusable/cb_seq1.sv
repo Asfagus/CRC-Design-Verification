@@ -48,7 +48,7 @@ m3.randomize() with{m3.data.size()>=6 && m3.data.size()<=10;};
 	for(i=4;i<m3.data.size()-1;i++) begin
 			m3.randomize() with {m3.data[i] inside {[0:255]} || m3.data[i] inside {9'h11c,9'h15c,9'h17c,9'h19c,9'h1dc,9'h1fb,9'h1fd,9'h1fe};};
 			sdata[i]=m3.data[i];
-		$display("from mid2 with data pkts m3.data=%h sdata[%d]=%h",m3.data[i],i,sdata[i]);
+		//$display("from mid2 with data pkts m3.data=%h sdata[%d]=%h",m3.data[i],i,sdata[i]);
 	end
 endtask : Mid2
 

@@ -29,8 +29,8 @@ class cb_scoreboard1 extends uvm_scoreboard;
 	forever begin
 		m=new();	//Not required
 		message_in.get(m);
-		$display("pushout from Scoreboard1 UVM =%h",m.pushout);
-		$display("Data from Scoreboard1 UVM =%h",m.dataout);	
+		//$display("pushout from Scoreboard1 UVM =%h",m.pushout);
+		//$display("Data from Scoreboard1 UVM =%h",m.dataout);	
 		if((m.pushout)) begin
 			//$display("Data from Scoreboard1 UVM =%h",m.dataout);	
 			message_out.write(m);

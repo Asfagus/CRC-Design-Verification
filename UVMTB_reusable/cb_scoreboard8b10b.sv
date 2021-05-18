@@ -72,7 +72,7 @@ endfunction: update_rd_b
 
 function int update_rd_k(input logic[9:0] dout);
 	int c1,c0,rd_new, diff;
-    $display("++++++++++++++++++++++++++I am inside the function kdatain=%0h",kdatain);
+    //$display("++++++++++++++++++++++++++I am inside the function kdatain=%0h",kdatain);
     c1=$countones(dout);
     c0=$countbits(dout,'0);
 	//$display("no of 1=%0d",c1);
@@ -379,13 +379,13 @@ crcvalidin=1;
 data_pkts_seen=1;
 end
 /*if(k==1 && m.datain!=9'h13c && m.datain!=9'h1bc) begin
-$display("i somehow got here");
+//$display("i somehow got here");
 crcdatain=m.datain;
-$display(" crc from this special place before doing xor =%h crcdatin=%h",crc,crcdatain);
+//$display(" crc from this special place before doing xor =%h crcdatin=%h",crc,crcdatain);
 crc = crc ^ 32'hffffffff;
-$display(" crc from this special place =%h",crc);
+//$display(" crc from this special place =%h",crc);
 end*/
-$display("********datain=%b a=%0b b=%b k=%b",m.datain,a,b,k);
+//$display("********datain=%b a=%0b b=%b k=%b",m.datain,a,b,k);
 	if(k==1 && m.datain!=9'b110111100) begin
 		kdatain=m.datain;
 		if(rd==-1) begin
@@ -780,7 +780,7 @@ $display("********datain=%b a=%0b b=%b k=%b",m.datain,a,b,k);
 	if(m.datain==9'b110111100) begin // K28.5 1bc
 		//if(crc!=32'hffffffff) begin
 		dout_crc0 = k_crc_disparity(8'b11110111);
-		$display("K23.7 ******send CRC now=%h rd =%d",dout_crc0,rd);
+		//$display("K23.7 ******send CRC now=%h rd =%d",dout_crc0,rd);
 		//crc=~crc;
 		if(data_pkts_seen==0) begin
 			//$display("\n \n BEFORRRRRRRRRRRRRRRRRRRRRRRRRRRRRr \n\n=%h",crc);
@@ -805,7 +805,7 @@ $display("********datain=%b a=%0b b=%b k=%b",m.datain,a,b,k);
 		dout_crc4 = crc_disparity(crc[31:24]);
 		end*/
 		dout = k_crc_disparity(8'b10111100);
-		$display("K28.5=%h rd=%0d",dout,rd);		
+		//$display("K28.5=%h rd=%0d",dout,rd);		
 		crc32_out_buff=32'hffffffff;
 		crc=32'hffffffff;
 		rd=-1;
@@ -1244,7 +1244,7 @@ b=crc>>5;
 		//$display("Final RD for btemp=%0d",rd);
 		//crc=update_crc(crcdatain);
 		dout_crc={btemp,atemp};
- $display(" i am from 8b10bcrc=%h,dout_crc=%h final rd=%0d",crc,dout_crc,rd);
+ //$display(" i am from 8b10bcrc=%h,dout_crc=%h final rd=%0d",crc,dout_crc,rd);
  
  return dout_crc;
 endfunction
@@ -1259,9 +1259,9 @@ endfunction
 			//Write dout to scbd_disparity
 			//if(dout!=10'b0101111100 && dout!=10'b1010000011) begin
 				//$display("dout=%h",dout);
-				$display("before from 8b10b scoreboard+++++++++++++++++++rd=%d data dout =%h",rd,dout);
+				//$display("before from 8b10b scoreboard+++++++++++++++++++rd=%d data dout =%h",rd,dout);
 				message_out.write(dout);
-				$display("from 8b10b scoreboard+++++++++++++++++++rd=%d data dout =%h",rd,dout);
+				//$display("from 8b10b scoreboard+++++++++++++++++++rd=%d data dout =%h",rd,dout);
 			//end	
 		end
 	end

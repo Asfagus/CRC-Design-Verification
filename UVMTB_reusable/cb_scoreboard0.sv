@@ -31,7 +31,7 @@ task run_phase(uvm_phase phase);
 	forever begin
 		m=new();
 		message_in.get(m);
-		$display("Data from Scoreboard0 UVM =%h pushin=%h",m.datain,m.pushin);
+		//$display("Data from Scoreboard0 UVM =%h pushin=%h",m.datain,m.pushin);
 		if((m.pushin)) begin
 			//$display("Data from Scoreboard0 UVM =%h",m.datain);	
 			message_out.write(m);
