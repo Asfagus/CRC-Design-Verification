@@ -1,5 +1,9 @@
 # CRC Design Verification
 
+This project Designs an 8b/10b Encoder DUT using Verilog and Verifies it successfully based on the expected features using UVM
+
+
+
 **IEEE 802.3 crc 32 code generator**
 
 
