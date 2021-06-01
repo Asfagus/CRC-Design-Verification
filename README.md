@@ -1,6 +1,6 @@
 # CRC Design Verification
 
-This project Designs an 8b/10b Encoder DUT using Verilog and Verifies it successfully based on the expected features using UVM
+This project Designs an 8b/10b Encoder DUT with CRC using Verilog and Verifies it successfully based on the expected features using UVM
 
 
 
